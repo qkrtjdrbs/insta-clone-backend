@@ -1,0 +1,8 @@
+Babel : 노드 버전과 상관없이 js 컴파일 해줌.
+Apollo server : graphQL을 받아들여 db에 접근하게 도와주는 서버
+nodemon : 코드를 계속 모니터링하면서 변화 생길 시 서버 리부팅없이도 바로 반영
+Prisma : ORM. sql코드를 쓰지 않고 js코드로 db와 통신
+Prisma Client : db와 소통하는 클라이언트
+Prisma migrate : schema.prisma에서 정의한 model(스키마)을 실제 db에 적용시킴. 이때 gql의 typeDefs와 같게
+수동으로 작성해 주어야 함.
+Prisma Studio : schema.prisma를 바탕으로 현재 db를 시각적으로 보여주고 쿼리도 가능함 
