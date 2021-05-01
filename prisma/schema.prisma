@@ -10,12 +10,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-//model = schema
-model Movie {
+model User {
   id        Int      @id @default(autoincrement())
-  title     String
-  year      Int
-  genre     String? //not require field
+  firstName String
+  lastName  String?
+  userName  String   @unique
+  email     String   @unique
+  password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
