@@ -1,3 +1,4 @@
+import fs, { createWriteStream } from "fs";
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
@@ -7,9 +8,28 @@ export default {
     editProfile: protectedResolver(
       async (
         _, //root
-        { firstName, lastName, userName, email, password: newPassword }, // args
+        {
+          firstName,
+          lastName,
+          userName,
+          email,
+          password: newPassword,
+          bio,
+          avatar,
+        }, // args
         { loggedInUser } // context
       ) => {
+        let avatarUrl = null;
+        if (avatar) {
+          const { filename, createReadStream } = await avatar;
+          const newFileName = `${loggedInUser.id}-${Date.now()}-${filename}`;
+          const readStream = createReadStream();
+          const writeStream = createWriteStream(
+            process.cwd() + "/uploads/" + newFileName
+          );
+          readStream.pipe(writeStream);
+          avatarUrl = `http://localhost:4000/static/${newFileName}`;
+        }
         let uglyPassword = null;
         if (newPassword) {
           uglyPassword = await bcrypt.hash(newPassword, 10);
@@ -23,7 +43,9 @@ export default {
             lastName,
             userName,
             email,
+            bio,
             ...(uglyPassword && { password: uglyPassword }),
+            ...(avatarUrl && { avatar: avatarUrl }),
           },
         });
         if (updatedUser.id) {
