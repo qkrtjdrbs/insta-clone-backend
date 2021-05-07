@@ -43,5 +43,4 @@ model Hashtag {
   photos    Photo[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
 }
