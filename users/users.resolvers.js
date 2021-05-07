@@ -33,5 +33,8 @@ export default {
         .following({ where: { id } });
       return exists.length !== 0;
     },
+    photos: ({ id }) => {
+      client.user.findUnique({ where: { id } }).photos();
+    },
   },
 };
