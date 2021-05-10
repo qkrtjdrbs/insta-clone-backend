@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-express";
 
 export default gql`
-  type Mutation {
-    unfollowUser(userName: String!): MutationResponse!
+  type Query {
+    seePhotoComments(id: Int!, lastId: Int): [Comment]
   }
 `;
