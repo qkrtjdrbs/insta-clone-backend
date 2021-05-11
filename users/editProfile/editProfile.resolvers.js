@@ -2,6 +2,7 @@ import fs, { createWriteStream } from "fs";
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { protectedResolver } from "../users.utils";
+import { uploadToS3 } from "../../shared/shared.utils";
 
 export default {
   Mutation: {
@@ -21,14 +22,15 @@ export default {
       ) => {
         let avatarUrl = null;
         if (avatar) {
-          const { filename, createReadStream } = await avatar;
+          avatarUrl = await uploadToS3(avatar, loggedInUser.id, "avatars");
+          /* const { filename, createReadStream } = await avatar;
           const newFileName = `${loggedInUser.id}-${Date.now()}-${filename}`;
           const readStream = createReadStream();
           const writeStream = createWriteStream(
             process.cwd() + "/uploads/" + newFileName
           );
           readStream.pipe(writeStream);
-          avatarUrl = `http://localhost:4000/static/${newFileName}`;
+          avatarUrl = `http://localhost:4000/static/${newFileName}`; */
         }
         let uglyPassword = null;
         if (newPassword) {

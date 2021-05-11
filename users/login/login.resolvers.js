@@ -13,7 +13,7 @@ export default {
           error: "user not found",
         };
       }
-      //check password with args.password
+      //check password(original pw) with user.password(hashing pw)
       const passwordOK = await bcrypt.compare(password, user.password);
       if (!passwordOK) {
         return {
