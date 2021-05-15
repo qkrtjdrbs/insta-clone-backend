@@ -12,9 +12,10 @@ server의 context parameter : 모든 resolver들에게 전달 가능
 protectedResolver : 유저의 토큰 정보 미리 확인(서버의 context로 전달) -> 정보 없으면 오류 리턴, 있으면 원래 실행해야될 resolver 리턴
 업로드 과정 : 유저가 내 서버에 파일 업로드 -> 서버에 있는 파일을 aws에 업로드 -> aws에서 url 얻음
 
-express server를 apollo server에 추가한 이유 : rest api 이용 할 수 있고 socket programming 가능하게 하려고
+express server를 apollo server에 추가한 이유 : rest api 이용 할 수 있고 socket programming 가능(ws)하게 하려고
 relation : 실제 db에 저장되지 않음, 생성시 connect, 삭제시 disconnect 필요.
-client로 배열 형태 불러올 때 : .findMany() 사용 or .findUnique({...}).배열명() 
+client로 배열 형태 불러올 때 : .findMany() 사용 or .findUnique({...}).스키마에 배열로 정의 된 필드명()
+불러올 데이터가 많은 경우에는 전자가 낫다. 
 
 사진을 그냥 지우면 안되는 이유 : onDelete 기능이 없어서 만약 사진에 comments, likes들이 달려있을 때 그냥 사진을 지우면 comment, likes는 존재하지만 사진이 없는 경우 발생 -> 사진이 없는 댓글, 좋아요는 relation에 어긋남 -> 오류 발생
 위와 같은 맥락으로, 사진 올린 유저를 그냥 지우려 하는 경우에도 오류 뜨는 것 확인
