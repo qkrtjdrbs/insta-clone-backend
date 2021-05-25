@@ -15,18 +15,20 @@ const apollo = new ApolloServer({
   uploads: false,
   //ctx means http context and web socket context
   context: async (ctx) => {
+    //if http request exist or not
     if (ctx.req) {
       return { loggedInUser: await getUser(ctx.req.headers.token) }; //http header;
     } else {
+      //websocket
       const {
         connection: { context },
       } = ctx;
       return { loggedInUser: context.loggedInUser };
     }
   },
-  // Authenticating user by onConnect
+  // Authenticating user on the websocket by onConnect
   subscriptions: {
-    //read http header
+    //read http header to get a token
     onConnect: async ({ token }) => {
       if (!token) {
         throw new Error("You can't listen.");
