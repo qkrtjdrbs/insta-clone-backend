@@ -14,7 +14,7 @@ export default gql`
     id: Int!
     users: [User]
     unreadTotal: Int!
-    messages(lastId: Int): [Message]
+    messages: [Message]
     createdAt: String!
     updatedAt: String!
   }

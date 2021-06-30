@@ -5,8 +5,6 @@ export default {
   Query: {
     seeFeed: protectedResolver((_, { offset }, { loggedInUser }) =>
       client.photo.findMany({
-        take: 2,
-        skip: offset,
         where: {
           OR: [
             {
@@ -26,6 +24,8 @@ export default {
         orderBy: {
           createdAt: "desc",
         },
+        take: 3,
+        skip: offset,
       })
     ),
   },
